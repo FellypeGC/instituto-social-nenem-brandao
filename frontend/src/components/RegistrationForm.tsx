@@ -1,39 +1,7 @@
+import { maskCPF, maskPhone } from '../../utils/masks';
 import { useForm, type SubmitHandler, type Resolver } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-
-
-const schema = yup.object({
-  nome: yup
-    .string()
-    .required("Nome é obrigatório")
-    .min(3)
-    .max(100),
-  email: yup
-    .string()
-    .email("Email inválido")
-    .default(""),
-  telefone: yup
-    .string()
-    .required("Telefone é obrigatório")
-    .matches(/^\(\d{2}\) \d{5}-\d{4}$/, "Telefone inválido"),
-  dataNascimento: yup
-    .date()
-    .required("Data de nascimento é obrigatória")
-    .typeError("Insira uma data válida")
-    .test("maior-de-idade", "Menor de idade precisa do responsável", (value) => calculateAge(new Date(value)))
-    .transform((value, originalValue) => (originalValue === "" ? undefined : value))
-    .max(new Date(), "Insira uma data válida")
-    .min(new Date('1900-01-01'), 'Data muito antiga'),
-  cpf: yup
-    .string()
-    .required("CPF é obrigatório")
-    .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "CPF inválido"),
-  rg: yup
-    .string(),
-  nacionalidade: yup
-    .string()
-});
+import { schema } from "../../schemas/registrationSchema"
 
 type RegistrationFormProps = {
   matricula: string;
@@ -49,15 +17,6 @@ type Inputs = {
   nacionalidade: string | null;
 }
 
-const calculateAge = (dataNasc: Date) => {
-  const today = new Date();
-  let age = today.getFullYear() - dataNasc.getFullYear();
-  const month = today.getMonth() - dataNasc.getMonth();
-  if (month < 0 || (month === 0 && today.getDate() < dataNasc.getDate())) {
-    age--;
-  }
-  return age >= 18;
-};
 
 const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
   const { 
@@ -67,6 +26,7 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
       isSubmitting
     },
     handleSubmit, 
+    setValue
     // watch,
   } = useForm<Inputs>({
     defaultValues: {
@@ -82,6 +42,16 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
   });
   
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
+  const handleCPFChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setValue("cpf", maskCPF(value), { shouldValidate: true});
+  }
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setValue("telefone", maskPhone(value), { shouldValidate: true });
+  }
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
@@ -104,6 +74,7 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
             type="text" 
             placeholder="Digite seu nome completo"
             className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none" 
+            
             {...register("nome")} 
           />
           <span className="text-red-600">{errors.nome?.message}</span>
@@ -132,6 +103,7 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
             placeholder="(XX) XXXXX-XXXX" 
             className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
             {...register("telefone")}
+            onChange={(e) => handlePhoneChange(e)}
           />
           <span className="text-red-600">{errors.telefone?.message}</span>
         </div>
@@ -162,6 +134,7 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
             placeholder="123.456.789-10" 
             className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
             {...register("cpf")}
+            onChange={(e) => handleCPFChange(e)}
           />
           <span className="text-red-600">{errors.cpf?.message}</span>
         </div>
