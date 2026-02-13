@@ -40,7 +40,7 @@ const FormScreen = () => {
             </div>
           ) : (
             // If started: shows the form
-            <div className="glass-card p-8 max-w-2xl">
+            <div className="glass-card p-10 w-full">
               <div className="flex justify-between items-center mb-6 border-b pb-4">
                 <h2 className="text-2xl font-bold text-green-700">Novo Cadastro de Aluno</h2>
                 <button className="text-gray-400 hover:text-red-500 cursor-pointer uppercase" onClick={() => setIsFormVisible(false)}>
@@ -53,7 +53,7 @@ const FormScreen = () => {
         }
 
         {/* <!-- Mensagem de Sucesso --> */}
-        <div className="glass-card p-10 text-center hidden w-2xl">
+        <div className="glass-card p-10 text-center w-full">
             <div className="text-green-500 text-6xl mb-4">✓</div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Cadastro Realizado!</h2>
             <p className="text-gray-600 mb-6">O aluno foi registrado com sucesso sob a matrícula <span className="font-bold text-blue-900">{matricula}</span>.</p>
