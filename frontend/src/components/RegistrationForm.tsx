@@ -102,8 +102,9 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
             type="text"
             placeholder="(XX) XXXXX-XXXX" 
             className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
-            {...register("telefone")}
-            onChange={(e) => handlePhoneChange(e)}
+            {...register("telefone", {
+              onChange: (e) => handlePhoneChange(e)
+            })}
           />
           <span className="text-red-600">{errors.telefone?.message}</span>
         </div>
@@ -133,8 +134,9 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
             type="text"
             placeholder="123.456.789-10" 
             className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
-            {...register("cpf")}
-            onChange={(e) => handleCPFChange(e)}
+            {...register("cpf", {
+              onChange: (e) => handleCPFChange(e)
+            })}
           />
           <span className="text-red-600">{errors.cpf?.message}</span>
         </div>
