@@ -1,4 +1,4 @@
-import logoInstituto from "../public/logo-instituto-social.png"
+import logoInstituto from "/logo-instituto-social.png"
 import FormScreen from "./components/FormScreen"
 
 function App() {
