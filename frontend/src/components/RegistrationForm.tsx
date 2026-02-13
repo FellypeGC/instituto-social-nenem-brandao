@@ -1,8 +1,39 @@
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useForm, type SubmitHandler, type Resolver } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-// TODO(FIX): fix input types and validations
+
+const schema = yup.object({
+  nome: yup
+    .string()
+    .required("Nome é obrigatório")
+    .min(3)
+    .max(100),
+  email: yup
+    .string()
+    .email("Email inválido")
+    .default(""),
+  telefone: yup
+    .string()
+    .required("Telefone é obrigatório")
+    .matches(/^\(\d{2}\) \d{5}-\d{4}$/, "Telefone inválido"),
+  dataNascimento: yup
+    .date()
+    .required("Data de nascimento é obrigatória")
+    .typeError("Insira uma data válida")
+    .test("maior-de-idade", "Menor de idade precisa do responsável", (value) => calculateAge(new Date(value)))
+    .transform((value, originalValue) => (originalValue === "" ? undefined : value))
+    .max(new Date(), "Insira uma data válida")
+    .min(new Date('1900-01-01'), 'Data muito antiga'),
+  cpf: yup
+    .string()
+    .required("CPF é obrigatório")
+    .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "CPF inválido"),
+  rg: yup
+    .string(),
+  nacionalidade: yup
+    .string()
+});
 
 type RegistrationFormProps = {
   matricula: string;
@@ -10,12 +41,12 @@ type RegistrationFormProps = {
 
 type Inputs = {
   nome: string;
-  email: string;
+  email: string | null;
   telefone: string;
-  dataNascimento: unknown; 
+  dataNascimento: string; 
   cpf: string;
-  rg: string;
-  nacionalidade: string;
+  rg: string | null;
+  nacionalidade: string | null;
 }
 
 const calculateAge = (dataNasc: Date) => {
@@ -28,33 +59,6 @@ const calculateAge = (dataNasc: Date) => {
   return age >= 18;
 };
 
-const schema = yup.object({
-  nome: yup
-    .string()
-    .min(3)
-    .max(100)
-    .required("Nome é obrigatório"),
-  email: yup
-    .string()
-    .email("Email inválido"),
-  telefone: yup
-    .string()
-    .matches(/^\(\d{2}\) \d{5}-\d{4}$/, "Telefone inválido")
-    .required("Telefone é obrigatório"),
-  dataNascimento: yup
-    .date()
-    .required("Data de nascimento é obrigatória")
-    .test("maior-de-idade", "Você precisa ter 18 anos", (value) => calculateAge(new Date(value))),
-  cpf: yup
-    .string()
-    .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "CPF inválido")
-    .required("CPF é obrigatório"),
-  rg: yup
-    .string(),
-  nacionalidade: yup
-    .string()
-});
-
 const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
   const { 
     register, 
@@ -65,8 +69,18 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
     handleSubmit, 
     // watch,
   } = useForm<Inputs>({
-    resolver: yupResolver(schema),
+    defaultValues: {
+      nome: "",
+      email: "",
+      telefone: "",
+      dataNascimento: undefined,
+      cpf: "",
+      rg: "",
+      nacionalidade: "",
+    },
+    resolver: yupResolver(schema) as unknown as Resolver<Inputs>,
   });
+  
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
   return (
