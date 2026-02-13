@@ -2,7 +2,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-// TODO(FIX): fix input types, validations and layout size
+// TODO(FIX): fix input types and validations
 
 type RegistrationFormProps = {
   matricula: string;
@@ -183,7 +183,7 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
 
       <button 
         type="submit" 
-        className="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-bold text-lg shadow-lg transition-all"
+        className="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-bold text-lg shadow-lg transition-all cursor-pointer"
       >
         {isSubmitting ? "Finalizando Cadastro..." : "Finalizar Cadastro"} 
       </button>
