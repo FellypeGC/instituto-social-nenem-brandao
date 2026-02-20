@@ -20,7 +20,6 @@ Este documento descreve a estrutura do formulário de cadastro de alunos do **In
 - Nacionalidade
 - Telefone (se houver)
 - E-mail (se houver)
-- Foto do aluno (upload)
 
 ---
 
@@ -45,7 +44,6 @@ Regra automática baseada na data de nascimento:
 - E-mail
 - Endereço completo
 - Comprovante de residência (upload)
-- Documento com foto (upload simples)
 
 **Observações importantes:**
 - Não solicitar órgão emissor
