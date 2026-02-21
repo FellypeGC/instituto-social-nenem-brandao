@@ -21,6 +21,10 @@ const FormScreen = () => {
     setIsFormVisible(true);
   }
 
+  /* 
+    TODO: hid the success message when clicking on "Voltar ao Início"
+  */ 
+
   return (
     <main className="w-full max-w-2xl mx-auto">
       {/* <!-- Tela Inicial: Botão de Iniciar --> */}
@@ -54,12 +58,12 @@ const FormScreen = () => {
 
         {/* <!-- Mensagem de Sucesso --> */}
         <div className="glass-card p-10 text-center w-full">
-            <div className="text-green-500 text-6xl mb-4">✓</div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Cadastro Realizado!</h2>
-            <p className="text-gray-600 mb-6">O aluno foi registrado com sucesso sob a matrícula <span className="font-bold text-blue-900">{matricula}</span>.</p>
-            <button className="btn-gold px-8 py-3 rounded-lg font-semibold"> {/* onClick={resetView}  */}
-              Voltar ao Início
-            </button>
+          <div className="text-green-500 text-6xl mb-4">✓</div>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">Cadastro Realizado!</h2>
+          <p className="text-gray-600 mb-6">O aluno foi registrado com sucesso sob a matrícula <span className="font-bold text-blue-900">{matricula}</span>.</p>
+          <button className="btn-gold px-8 py-3 rounded-lg font-semibold"> {/* onClick={resetView}  */}
+            Voltar ao Início
+          </button>
         </div>
     </main>
   )

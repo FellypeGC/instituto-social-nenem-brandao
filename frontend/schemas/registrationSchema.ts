@@ -1,10 +1,15 @@
 import * as yup from "yup";
 
-const calculateAge = (dataNasc: Date) => {
+export const calculateAge = (birthday: Date) => {
+  if (!birthday) return false;
+
+  const birthdayDate = new Date(birthday);
+
   const today = new Date();
-  let age = today.getFullYear() - dataNasc.getFullYear();
-  const month = today.getMonth() - dataNasc.getMonth();
-  if (month < 0 || (month === 0 && today.getDate() < dataNasc.getDate())) {
+  let age = today.getFullYear() - birthdayDate.getFullYear();
+  const month = today.getMonth() - birthdayDate.getMonth();
+
+  if (month < 0 || (month === 0 && today.getDate() < birthdayDate.getDate())) {
     age--;
   }
   return age >= 18;
@@ -28,7 +33,6 @@ export const schema = yup.object({
     .date()
     .required("Data de nascimento é obrigatória")
     .typeError("Insira uma data válida")
-    .test("maior-de-idade", "Menor de idade precisa do responsável", (value) => calculateAge(new Date(value)))
     .transform((value, originalValue) => (originalValue === "" ? undefined : value))
     .max(new Date(), "Insira uma data válida")
     .min(new Date('1900-01-01'), 'Data muito antiga'),
@@ -39,5 +43,12 @@ export const schema = yup.object({
   rg: yup
     .string(),
   nacionalidade: yup
+    .string(),
+  responsavelNome: yup
     .string()
+    .when("dataNascimento", {
+      is: (value: Date) => value && !calculateAge(value),
+      then: schema => schema.required("Obrigatório para menor de idade"),
+      otherwise: schema => schema.notRequired()
+    }),
 });
