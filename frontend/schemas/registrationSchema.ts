@@ -58,8 +58,14 @@ export const schema = yup.object({
     .max(100, "Nome do responsável deve ter no máximo 100 caracteres"),
   responsavelCpf: yup
     .string()
-    .required("CPF é obrigatório")
-    .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "CPF inválido"),
+    .when("dataNascimento", {
+      is: (value: Date) => value && !calculateAge(value),
+      then: schema =>
+        schema
+          .required("Obrigatório para menor de idade")
+          .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "CPF inválido"),
+      otherwise: schema => schema.notRequired()
+    }),
   responsavelRg: yup
     .string(),
   responsavelEmail: yup
@@ -70,6 +76,13 @@ export const schema = yup.object({
     .string()
     .required("Telefone é obrigatório")
     .matches(/^(\(?\d{2}\)?\s?)?9\d{4}-?\d{4}$/, "Telefone inválido"),
+  responsavelDataNascimento: yup
+    .date()
+    .required("Data de nascimento do responsável é obrigatória")
+    .typeError("Insira uma data válida")
+    .transform((value, originalValue) => (originalValue === "" ? undefined : value))
+    .max(new Date(), "Insira uma data válida")
+    .min(new Date("1900-01-01"), "Data muito antiga"),
   responsavelNacionalidade: yup
     .string(),
 });

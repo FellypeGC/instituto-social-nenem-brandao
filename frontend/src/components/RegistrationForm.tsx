@@ -25,6 +25,7 @@ type Inputs = {
   responsavelRg: string;
   responsavelEmail: string | null;
   responsavelTelefone: string;
+  responsavelDataNascimento: Date;
   responsavelNacionalidade: string | null;
 }
 
@@ -53,6 +54,7 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
       responsavelRg: "",
       responsavelEmail: "",
       responsavelTelefone: "",
+      responsavelDataNascimento: undefined,
       responsavelNacionalidade: "",
     },
     resolver: yupResolver(registrationSchema.schema) as unknown as Resolver<Inputs>,
@@ -264,6 +266,7 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
               />
               <span className="text-red-600">{errors.responsavelTelefone?.message}</span>
             </div>
+
             {/* DATA DE NASCIMENTO */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
@@ -273,13 +276,10 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
               <input
                 type="date"
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
-                {...register("dataNascimento", {
-                  onChange:(e) => {
-                    console.log(e.target.value)
-                  }
-                })}
+                {...register("responsavelDataNascimento")}
               />
             </div>
+
             {/* CPF */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
@@ -297,6 +297,7 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
               />
               <span className="text-red-600">{errors.responsavelCpf?.message}</span>
             </div>
+
             {/* RG */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
