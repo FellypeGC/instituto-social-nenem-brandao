@@ -1,8 +1,8 @@
+import { useEffect, useMemo } from 'react';
 import { maskCPF, maskPhone } from '../../utils/masks';
 import { useForm, type SubmitHandler, type Resolver } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as registrationSchema from "../../schemas/registrationSchema";
-import { useEffect, useMemo } from 'react';
 
 /* 
   TODO: 1. add/switch inputs and defaultValues from the business rules in both student and guardian form; 2. transform the form into a multi-step form;
@@ -21,6 +21,11 @@ type Inputs = {
   rg: string | null;
   nacionalidade: string | null;
   responsavelNome: string;
+  responsavelCpf: string;
+  responsavelRg: string;
+  responsavelEmail: string | null;
+  responsavelTelefone: string;
+  responsavelNacionalidade: string | null;
 }
 
 
@@ -44,6 +49,11 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
       rg: "",
       nacionalidade: "",
       responsavelNome: "",
+      responsavelCpf: "",
+      responsavelRg: "",
+      responsavelEmail: "",
+      responsavelTelefone: "",
+      responsavelNacionalidade: "",
     },
     resolver: yupResolver(registrationSchema.schema) as unknown as Resolver<Inputs>,
   });
@@ -59,6 +69,11 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
   useEffect(() => {
     if (!isMinor) {
       setValue("responsavelNome", "");
+      setValue("responsavelCpf", "");
+      setValue("responsavelRg", "");
+      setValue("responsavelEmail", "");
+      setValue("responsavelTelefone", "");
+      setValue("responsavelNacionalidade", "");
     }
   }, [isMinor]);
   
@@ -199,10 +214,11 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
 
       {isMinor && (
         <div>
-          <h1 className="text-2xl font-bold text-gray-700">Identificação do Responsável</h1>
+          <hr />
+          <h1 className="text-2xl font-bold text-gray-700 mb-6 mt-6">Identificação do Responsável</h1>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* NOME DO ALUNO */}
+            {/* NOME */}
             <div className="col-span-1 md:col-span-2">
               <label className="block text-sm font-medium text-gray-700">
                 Nome Completo
@@ -213,10 +229,11 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
                 placeholder="Digite seu nome completo"
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
           
-                {...register("nome")}
+                {...register("responsavelNome")}
               />
-              <span className="text-red-600">{errors.nome?.message}</span>
+              <span className="text-red-600">{errors.responsavelNome?.message}</span>
             </div>
+
             {/* EMAIL */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
@@ -226,10 +243,11 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
                 type="email"
                 placeholder="seu.email@exemplo.com"
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
-                {...register("email")}
+                {...register("responsavelEmail")}
               />
-              <span className="text-red-600">{errors.email?.message}</span>
+              <span className="text-red-600">{errors.responsavelEmail?.message}</span>
             </div>
+
             {/* TELEFONE */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
@@ -240,11 +258,11 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
                 type="text"
                 placeholder="(XX) XXXXX-XXXX"
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
-                {...register("telefone", {
+                {...register("responsavelTelefone", {
                   onChange: (e) => handlePhoneChange(e)
                 })}
               />
-              <span className="text-red-600">{errors.telefone?.message}</span>
+              <span className="text-red-600">{errors.responsavelTelefone?.message}</span>
             </div>
             {/* DATA DE NASCIMENTO */}
             <div>
@@ -261,7 +279,6 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
                   }
                 })}
               />
-              <span className="text-red-600">{errors.dataNascimento?.message}</span>
             </div>
             {/* CPF */}
             <div>
@@ -274,11 +291,11 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
                 type="text"
                 placeholder="123.456.789-10"
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
-                {...register("cpf", {
+                {...register("responsavelCpf", {
                   onChange: (e) => handleCPFChange(e)
                 })}
               />
-              <span className="text-red-600">{errors.cpf?.message}</span>
+              <span className="text-red-600">{errors.responsavelCpf?.message}</span>
             </div>
             {/* RG */}
             <div>
@@ -289,10 +306,11 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
                 type="text"
                 placeholder="Digite seu RG"
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
-                {...register("rg")}
+                {...register("responsavelRg")}
               />
-              <span className="text-red-600">{errors.rg?.message}</span>
+              <span className="text-red-600">{errors.responsavelRg?.message}</span>
             </div>
+
             {/* NACIONALIDADE */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
@@ -302,9 +320,9 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
                 type="text"
                 placeholder="Digite sua nacionalidade"
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
-                {...register("nacionalidade")}
+                {...register("responsavelNacionalidade")}
               />
-              <span className="text-red-600">{errors.nacionalidade?.message}</span>
+              <span className="text-red-600">{errors.responsavelNacionalidade?.message}</span>
             </div>
           </div>
         </div>
