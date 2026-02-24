@@ -24,7 +24,8 @@ export const schema = yup.object({
   email: yup
     .string()
     .email("Email inválido")
-    .default(""),
+    .default("")
+    .notRequired(),
   telefone: yup
     .string()
     .required("Telefone é obrigatório")
@@ -33,7 +34,7 @@ export const schema = yup.object({
     .date()
     .required("Data de nascimento é obrigatória")
     .typeError("Insira uma data válida")
-    .transform((value, originalValue) => (originalValue === "" ? undefined : value))
+    .transform((value, originalValue) => (originalValue === "" ? null : value))
     .max(new Date(), "Insira uma data válida")
     .min(new Date("1900-01-01"), "Data muito antiga"),
   cpf: yup
@@ -41,9 +42,11 @@ export const schema = yup.object({
     .required("CPF é obrigatório")
     .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "CPF inválido"),
   rg: yup
-    .string(),
+    .string()
+    .notRequired(),
   nacionalidade: yup
-    .string(),
+    .string()
+    .notRequired(),
 
   // Guardian Validation 
   responsavelNome: yup
@@ -67,11 +70,13 @@ export const schema = yup.object({
       otherwise: schema => schema.notRequired()
     }),
   responsavelRg: yup
-    .string(),
+    .string()
+    .notRequired(),
   responsavelEmail: yup
     .string()
     .email("Email inválido")
-    .default(""),
+    .default("")
+    .notRequired(),
   responsavelTelefone: yup
     .string()
     .required("Telefone é obrigatório")
@@ -80,9 +85,12 @@ export const schema = yup.object({
     .date()
     .required("Data de nascimento do responsável é obrigatória")
     .typeError("Insira uma data válida")
-    .transform((value, originalValue) => (originalValue === "" ? undefined : value))
+    .transform((value, originalValue) => (originalValue === "" ? null : value))
     .max(new Date(), "Insira uma data válida")
     .min(new Date("1900-01-01"), "Data muito antiga"),
   responsavelNacionalidade: yup
-    .string(),
+    .string()
+    .notRequired(),
 });
+
+export type RegistrationFormData = yup.InferType<typeof schema>;
