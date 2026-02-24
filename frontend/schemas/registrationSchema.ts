@@ -39,7 +39,12 @@ export const schema = yup.object({
     .min(new Date("1900-01-01"), "Data muito antiga"),
   cpf: yup
     .string()
-    .required("CPF é obrigatório")
+    .when("dataNascimento", {
+      is: (value: Date) => value && !calculateAge(value),
+      then: schema => schema.notRequired(),
+      otherwise: schema => schema.required("CPF é obrigatório para maiores de idade")
+      .nullable()
+    })
     .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "CPF inválido"),
   rg: yup
     .string()
@@ -54,7 +59,7 @@ export const schema = yup.object({
     .required("Nome do responsável é obrigatório")
     .when("dataNascimento", {
       is: (value: Date) => value && !calculateAge(value),
-      then: schema => schema.required("Obrigatório para menor de idade"),
+      then: schema => schema.required("Nome do responsável é obrigatório"),
       otherwise: schema => schema.notRequired()
     })
     .min(3, "Nome do responsável deve ter pelo menos 3 caracteres")
@@ -65,7 +70,7 @@ export const schema = yup.object({
       is: (value: Date) => value && !calculateAge(value),
       then: schema =>
         schema
-          .required("Obrigatório para menor de idade")
+          .required("CPF do responsável é obrigatório")
           .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "CPF inválido"),
       otherwise: schema => schema.notRequired()
     }),
@@ -79,7 +84,7 @@ export const schema = yup.object({
     .notRequired(),
   responsavelTelefone: yup
     .string()
-    .required("Telefone é obrigatório")
+    .required("Telefone do responsável é obrigatório")
     .matches(/^(\(?\d{2}\)?\s?)?9\d{4}-?\d{4}$/, "Telefone inválido"),
   responsavelDataNascimento: yup
     .date()

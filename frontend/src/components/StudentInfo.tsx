@@ -11,14 +11,14 @@ type StudentInfoProps = {
 
 const StudentInfo = ( { register, errors, setValue, isMinor}: StudentInfoProps ) => {
 
-  const handleCPFChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCPFChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: keyof RegistrationFormData) => {
     const { value } = e.target;
-    setValue("cpf", maskCPF(value), { shouldValidate: true});
+    setValue(fieldName, maskCPF(value), { shouldValidate: true});
   }
 
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: keyof RegistrationFormData) => {
     const { value } = e.target;
-    setValue("telefone", maskPhone(value), { shouldValidate: true });
+    setValue(fieldName, maskPhone(value), { shouldValidate: true });
   }
 
 
@@ -69,7 +69,7 @@ const StudentInfo = ( { register, errors, setValue, isMinor}: StudentInfoProps )
             placeholder="(XX) XXXXX-XXXX"
             className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
             {...register("telefone", {
-              onChange: (e: React.ChangeEvent<HTMLInputElement>) => handlePhoneChange(e)
+              onChange: (e: React.ChangeEvent<HTMLInputElement>) => handlePhoneChange(e, "telefone")
             })}
           />
           <span className="text-red-600">{errors.telefone?.message}</span>
@@ -94,14 +94,14 @@ const StudentInfo = ( { register, errors, setValue, isMinor}: StudentInfoProps )
           <label className="block text-sm font-medium text-gray-700">
             {/* Optional for underagers - Required for adults */}
             CPF
-            <span className="text-red-600">*</span>
+            {!isMinor ? <span className="text-red-600">*</span> : null}
           </label>
           <input
             type="text"
             placeholder="123.456.789-10"
             className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
             {...register("cpf", {
-              onChange: (e: React.ChangeEvent<HTMLInputElement>) => handleCPFChange(e)
+              onChange: (e: React.ChangeEvent<HTMLInputElement>) => handleCPFChange(e, "cpf")
             })}
           />
           <span className="text-red-600">{errors.cpf?.message}</span>
@@ -183,7 +183,7 @@ const StudentInfo = ( { register, errors, setValue, isMinor}: StudentInfoProps )
                 placeholder="(XX) XXXXX-XXXX"
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
                 {...register("responsavelTelefone", {
-                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => handlePhoneChange(e)
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => handlePhoneChange(e, "responsavelTelefone")
                 })}
               />
               <span className="text-red-600">{errors.responsavelTelefone?.message}</span>
@@ -214,7 +214,7 @@ const StudentInfo = ( { register, errors, setValue, isMinor}: StudentInfoProps )
                 placeholder="123.456.789-10"
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
                 {...register("responsavelCpf", {
-                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => handleCPFChange(e)
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => handleCPFChange(e, "responsavelCpf")
                 })}
               />
               <span className="text-red-600">{errors.responsavelCpf?.message}</span>
