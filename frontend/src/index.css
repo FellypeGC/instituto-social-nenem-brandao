@@ -9,36 +9,45 @@ body {
   flex-direction: column;
   padding: 40px 16px;
 }
+
 .glass-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: #f8fafc;
   backdrop-filter: blur(10px);
   border-radius: 20px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
+
 .btn-gold {
   background-color: #d4af37;
   color: #fff;
   transition: all 0.3s ease;
 }
+
 .btn-gold:hover {
   background-color: #b8962e;
   transform: translateY(-1px);
 }
+
 .form-input:disabled {
-  background-color: #f3f4f6;
+  background-color: #EFF6FF;
+  border: none;
   cursor: not-allowed;
   color: #1e3a8a;
   font-weight: 700;
 }
 
-.step-indicator {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 14px;
-  transition: all 0.3s;
+input {
+  background: #f1f5f9;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px;
+  transition: all 0.2s;
+  color: #1e293b;
+}
+
+input:focus {
+  border-color: #1e293b;
+  background: #ffffff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgb(30, 41, 59, .1);
 }

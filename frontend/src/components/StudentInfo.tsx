@@ -1,15 +1,16 @@
 import type { RegistrationFormData } from "../../schemas/registrationSchema";
-import type { UseFormRegister, FieldErrors, UseFormSetValue } from "react-hook-form";
+import type { UseFormRegister, FieldErrors, UseFormSetValue, UseFormWatch } from "react-hook-form";
 import { maskCPF, maskPhone } from '../../utils/masks';
 
 type StudentInfoProps = {
   register: UseFormRegister<RegistrationFormData>;
-  errors: FieldErrors<RegistrationFormData>;
   setValue: UseFormSetValue<RegistrationFormData>;
+  watch: UseFormWatch<RegistrationFormData>;
+  errors: FieldErrors<RegistrationFormData>;
   isMinor: boolean;
 }
 
-const StudentInfo = ( { register, errors, setValue, isMinor}: StudentInfoProps ) => {
+const StudentInfo = ( { register, setValue, watch, errors, isMinor }: StudentInfoProps ) => {
 
   const handleCPFChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: keyof RegistrationFormData) => {
     const { value } = e.target;
@@ -94,7 +95,7 @@ const StudentInfo = ( { register, errors, setValue, isMinor}: StudentInfoProps )
           <label className="block text-sm font-medium text-gray-700">
             {/* Optional for underagers - Required for adults */}
             CPF
-            {!isMinor ? <span className="text-red-600">*</span> : null}
+            {!isMinor && watch("dataNascimento") ? <span className="text-red-600">*</span> : null}
           </label>
           <input
             type="text"
