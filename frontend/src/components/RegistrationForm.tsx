@@ -28,6 +28,7 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
     handleSubmit, 
     watch,
     setValue,
+    clearErrors
   } = useForm<RegistrationFormData>({
     defaultValues: {
       nome: "",
@@ -46,14 +47,18 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
       responsavelNacionalidade: "",
     },
     resolver: yupResolver(schema) as Resolver<RegistrationFormData>,
+    mode: "onChange",
+    reValidateMode: "onChange"
   });
 
   const birthday = watch("dataNascimento");
-  const displayGuardianForm = calculateAge(birthday);
+  // const displayGuardianForm = calculateAge(birthday);
 
   const isMinor = useMemo(() => {
-    if (!birthday) return false;
-    return !displayGuardianForm
+    if (!birthday || isNaN(new Date(birthday).getTime())) return false;
+
+    const isAdult = calculateAge(birthday);
+    return !isAdult
   }, [birthday]);
 
   useEffect(() => {
@@ -66,7 +71,11 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
       
       fields.forEach(campo => setValue(campo, ""));
     }
-  }, [isMinor, setValue]);
+
+    if (isMinor) {
+      clearErrors("cpf")
+    }
+  }, [isMinor, setValue, clearErrors]);
 
   const nextStep = async () => {
     let fieldsToValidate: (keyof RegistrationFormData)[] = [];
@@ -75,6 +84,11 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
       fieldsToValidate = [
         "nome", "email", "telefone", "dataNascimento", "cpf", "rg", "nacionalidade"
       ];
+
+      if(!isMinor) {
+        fieldsToValidate.push("cpf");
+      }
+
       if (isMinor) {
         fieldsToValidate.push("responsavelNome", "responsavelCpf", "responsavelRg", "responsavelEmail", "responsavelTelefone", "responsavelDataNascimento", "responsavelNacionalidade");
       }
@@ -106,6 +120,7 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
           register={register} 
           setValue={setValue} 
           watch={watch}
+          trigger={trigger}
           errors={errors} 
           isMinor={isMinor}
         />

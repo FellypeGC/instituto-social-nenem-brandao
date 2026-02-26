@@ -19,7 +19,6 @@ const Steps = ({ currentStep }: StepsProps) => {
         </>
       ))}
     </div>
-    
   )
 }
 

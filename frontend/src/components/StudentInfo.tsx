@@ -1,16 +1,17 @@
-import type { RegistrationFormData } from "../../schemas/registrationSchema";
-import type { UseFormRegister, FieldErrors, UseFormSetValue, UseFormWatch } from "react-hook-form";
+import { calculateAge, type RegistrationFormData } from "../../schemas/registrationSchema";
+import type { UseFormRegister, FieldErrors, UseFormSetValue, UseFormWatch, UseFormTrigger } from "react-hook-form";
 import { maskCPF, maskPhone } from '../../utils/masks';
 
 type StudentInfoProps = {
   register: UseFormRegister<RegistrationFormData>;
   setValue: UseFormSetValue<RegistrationFormData>;
   watch: UseFormWatch<RegistrationFormData>;
+  trigger: UseFormTrigger<RegistrationFormData>;
   errors: FieldErrors<RegistrationFormData>;
   isMinor: boolean;
 }
 
-const StudentInfo = ( { register, setValue, watch, errors, isMinor }: StudentInfoProps ) => {
+const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: StudentInfoProps) => {
 
   const handleCPFChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: keyof RegistrationFormData) => {
     const { value } = e.target;
@@ -40,7 +41,9 @@ const StudentInfo = ( { register, setValue, watch, errors, isMinor }: StudentInf
             placeholder="Digite seu nome completo"
             className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
     
-            {...register("nome")}
+            {...register("nome", {
+              onChange: () => trigger("nome")
+            })}
           />
           <span className="text-red-600">{errors.nome?.message}</span>
         </div>
@@ -85,7 +88,11 @@ const StudentInfo = ( { register, setValue, watch, errors, isMinor }: StudentInf
           <input
             type="date"
             className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
-            {...register("dataNascimento")}
+            {...register("dataNascimento", {
+              valueAsDate: true,
+              onChange: () => trigger("dataNascimento")
+              // trigger("cpf") 
+            })}
           />
           <span className="text-red-600">{errors.dataNascimento?.message}</span>
         </div>
@@ -95,7 +102,7 @@ const StudentInfo = ( { register, setValue, watch, errors, isMinor }: StudentInf
           <label className="block text-sm font-medium text-gray-700">
             {/* Optional for underagers - Required for adults */}
             CPF
-            {!isMinor && watch("dataNascimento") ? <span className="text-red-600">*</span> : null}
+            {watch("dataNascimento") && calculateAge(watch("dataNascimento")) ? <span className="text-red-600">*</span> : null}
           </label>
           <input
             type="text"
@@ -184,7 +191,10 @@ const StudentInfo = ( { register, setValue, watch, errors, isMinor }: StudentInf
                 placeholder="(XX) XXXXX-XXXX"
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
                 {...register("responsavelTelefone", {
-                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => handlePhoneChange(e, "responsavelTelefone")
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    handlePhoneChange(e, "responsavelTelefone");
+                    trigger("responsavelTelefone");
+                  }
                 })}
               />
               <span className="text-red-600">{errors.responsavelTelefone?.message}</span>
@@ -199,8 +209,14 @@ const StudentInfo = ( { register, setValue, watch, errors, isMinor }: StudentInf
               <input
                 type="date"
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
-                {...register("responsavelDataNascimento")}
+                {...register("responsavelDataNascimento", {
+                  valueAsDate: true,
+                  onChange: () => trigger("responsavelDataNascimento")
+                })}
               />
+              {errors.responsavelDataNascimento && (
+                <span className="text-red-600">{errors.responsavelDataNascimento?.message}</span>
+              )}
             </div>
 
             {/* CPF */}
