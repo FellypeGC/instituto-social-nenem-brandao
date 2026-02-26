@@ -78,23 +78,7 @@ Regra automática baseada na data de nascimento:
 
 ---
 
-## 6️⃣ CRITÉRIO DE PERMANÊNCIA
-
-### Campo informativo no formulário:
-
-☑️ **Declaro estar ciente de que a permanência nas atividades está condicionada ao bom rendimento e comportamento escolar.**
-
-### Controle interno do sistema:
-
-- Status:
-  - Ativo
-  - Em observação
-  - Suspenso
-  - Desligado
-
----
-
-## 7️⃣ SAÚDE
+## 6️⃣ SAÚDE
 
 - Possui restrição médica?
 - Usa medicação contínua?
@@ -103,7 +87,7 @@ Regra automática baseada na data de nascimento:
 
 ---
 
-## 8️⃣ DADOS SOCIOECONÔMICOS
+## 7️⃣ DADOS SOCIOECONÔMICOS
 
 - Renda familiar
 - Número de pessoas na residência
@@ -111,7 +95,7 @@ Regra automática baseada na data de nascimento:
 
 ---
 
-## 9️⃣ ATIVIDADES DE INTERESSE
+## 8️⃣ ATIVIDADES DE INTERESSE
 
 - Lista de atividades disponíveis (checkbox múltipla escolha)
 
