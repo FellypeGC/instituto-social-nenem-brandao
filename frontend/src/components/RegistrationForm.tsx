@@ -134,8 +134,9 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
         {currentStep >= 0 && (
           <button 
             type="button" 
-            className="border-[1.5px] border-[#e2e8f0] flex-1 py-4 rounded-xl font-bold uppercase text-xs tracking-wider cursor-pointer bg-[#f1f5f9] hover:bg-[#e2e8f0] text-[#64748b] transition-all"
+            className="border-[1.5px] border-[#e2e8f0] flex-1 py-4 rounded-xl font-bold uppercase text-xs tracking-wider cursor-pointer bg-[#f1f5f9] hover:bg-[#e2e8f0] text-[#64748b] transition-all disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400"
             onClick={prevStep}
+            disabled={currentStep === 0}
           >
             Voltar
           </button>
