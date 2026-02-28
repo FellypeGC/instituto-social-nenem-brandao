@@ -37,16 +37,6 @@ export const schema = yup.object({
     .transform((value, originalValue) => (originalValue === "" ? null : value))
     .max(new Date(), "Insira uma data válida")
     .min(new Date("1900-01-01"), "Data muito antiga"),
-  // cpf: yup
-  //   .string()
-  //   .notRequired()
-  //   .when("dataNascimento", {
-  //     is: (value: Date) => value && !calculateAge(value),
-  //     then: schema => schema.notRequired(),
-  //     otherwise: schema => schema.required("CPF é obrigatório para maiores de idade")
-  //     .nullable()
-  //   })
-  //   .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "CPF inválido"),
   cpf: yup
     .string()
     .ensure()
