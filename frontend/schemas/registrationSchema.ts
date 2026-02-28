@@ -21,6 +21,10 @@ export const schema = yup.object({
     .required("Nome é obrigatório")
     .min(3, "Nome do aluno precisa ter pelo menos 3 caracteres")
     .max(100, "Nome pode ter no máximo 100 caracteres"),
+  nomeSocial: yup
+    .string()
+    .min(3, "Nome do aluno precisa ter pelo menos 3 caracteres")
+    .max(100, "Nome pode ter no máximo 100 caracteres"),
   email: yup
     .string()
     .email("Email inválido")

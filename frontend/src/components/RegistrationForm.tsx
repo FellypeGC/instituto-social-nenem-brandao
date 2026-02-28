@@ -32,6 +32,7 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
   } = useForm<RegistrationFormData>({
     defaultValues: {
       nome: "",
+      nomeSocial: "",
       email: "",
       telefone: "",
       dataNascimento: undefined as Date | undefined,

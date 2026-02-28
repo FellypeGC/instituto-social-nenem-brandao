@@ -48,6 +48,24 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
           <span className="text-red-600">{errors.nome?.message}</span>
         </div>
 
+        {/* NOME SOCIAL DO ALUNO */}
+
+        <div className="col-span-1 md:col-span-2">
+          <label className="block text-sm font-medium text-gray-700">
+            Nome Social
+          </label>
+          <input
+            type="text"
+            placeholder="Digite seu nome social"
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+    
+            {...register("nomeSocial", {
+              onChange: () => trigger("nomeSocial")
+            })}
+          />
+          <span className="text-red-600">{errors.nomeSocial?.message}</span>
+        </div>
+
         {/* EMAIL */}
         <div>
           <label className="block text-sm font-medium text-gray-700">
