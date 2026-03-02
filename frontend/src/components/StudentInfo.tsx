@@ -1,6 +1,6 @@
 import { calculateAge, type RegistrationFormData } from "../../schemas/registrationSchema";
 import type { UseFormRegister, FieldErrors, UseFormSetValue, UseFormWatch, UseFormTrigger } from "react-hook-form";
-import { maskCPF, maskPhone } from '../../utils/masks';
+import { maskCPF, maskPhone, maskCEP } from '../../utils/masks';
 
 type StudentInfoProps = {
   register: UseFormRegister<RegistrationFormData>;
@@ -23,6 +23,10 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
     setValue(fieldName, maskPhone(value), { shouldValidate: true });
   }
 
+  const handleCEPChange = (e:React.ChangeEvent<HTMLInputElement>, fieldName: keyof RegistrationFormData) => {
+    const { value } = e.target;
+    setValue(fieldName, maskCEP(value), { shouldValidate: true });
+  }
 
   return (
     <>
@@ -299,6 +303,117 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
               />
               <span className="text-red-600">{errors.responsavelNacionalidade?.message}</span>
             </div>
+          
+            {/* ESTADO */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Estado 
+                <span className="text-red-600">*</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Digite o Estado"
+                className="w-full p-3 border rounded-lg focus:ring-2 outline-none"
+                {...register("responsavelEstado", {
+                  
+                })}
+              />
+              <span className="text-red-600 text-sm">{errors.responsavelEstado?.message}</span>
+            </div>
+
+            {/* CIDADE */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Cidade 
+                <span className="text-red-600">*</span>
+              </label>
+              <input 
+                type="text" 
+                placeholder="Digite a cidade"
+                className="w-full p-3 border rounded-lg focus:ring-2 outline-none" 
+                {...register("responsavelCidade")} 
+              />
+              <span className="text-red-600 text-sm">{errors.responsavelCidade?.message}</span>
+            </div>
+
+            {/* CEP */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                CEP
+                <span className="text-red-600">*</span>
+              </label>
+              <input 
+                type="text" 
+                placeholder="00000-000"
+                className="w-full p-3 border rounded-lg focus:ring-2 outline-none" 
+                {...register("responsavelCep", {
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    trigger("responsavelCep");
+                    handleCEPChange(e, "responsavelCep");
+                  }
+                })} 
+              />
+              <span className="text-red-600 text-sm">{errors.responsavelCep?.message}</span>
+            </div>
+
+            
+            {/* BAIRRO */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Bairro 
+                <span className="text-red-600">*</span>
+              </label>
+              <input 
+                type="text" 
+                placeholder="Digite o bairro"
+                className="w-full p-3 border rounded-lg focus:ring-2 outline-none" 
+                {...register("responsavelBairro")} 
+              />
+              <span className="text-red-600 text-sm">{errors.responsavelBairro?.message}</span>
+            </div>
+
+            {/* NÚMERO E COMPLEMENTO */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Número 
+                <span className="text-red-600">*</span>
+              </label>
+              <input 
+                type="text" 
+                placeholder="Digite o número"
+                className="w-full p-3 border rounded-lg focus:ring-2 outline-none" 
+                {...register("responsavelNumero")} 
+              />
+              <span className="text-red-600 text-sm">{errors.responsavelNumero?.message}</span>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                UF 
+                <span className="text-red-600">*</span>
+              </label>
+              <input 
+                type="text" 
+                maxLength={2} 
+                placeholder="Digite o UF"
+                className="w-full p-3 border rounded-lg focus:ring-2 outline-none" 
+                {...register("responsavelEstado")} 
+              />
+            </div>
+
+            {/* COMPLEMENTO */}
+            <div className="col-span-1 md:col-span-2 mx-auto">
+              <label className="block text-sm font-medium text-gray-700">
+                Complemento
+              </label>
+              <input 
+                type="text" 
+                placeholder="Digite o Complemento"
+                className="w-full p-3 border rounded-lg focus:ring-2 outline-none" {...register("responsavelComplemento")} 
+              />
+              <span className="text-red-600 text-sm">{errors.responsavelComplemento?.message}</span>
+            </div>
+            
           </div>
         </div>
       )}

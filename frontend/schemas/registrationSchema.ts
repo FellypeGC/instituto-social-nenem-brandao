@@ -110,6 +110,27 @@ export const schema = yup.object({
   responsavelNacionalidade: yup
     .string()
     .notRequired(),
+  responsavelEstado: yup
+    .string()
+    .required("Estado é obrigatório"),
+  responsavelCidade: yup
+    .string()
+    .required("Cidade é obrigatória"),
+  responsavelCep: yup
+    .string()
+    .required("CEP é obrigatório").matches(/^\d{5}-\d{3}$/, "CEP inválido"),
+  responsavelRua: yup
+    .string()
+    .required("Rua é obrigatória"),
+  responsavelBairro: yup
+    .string()
+    .required("Bairro é obrigatório"),
+  responsavelNumero: yup
+    .string()
+    .required("Número é obrigatório"),
+  responsavelComplemento: yup
+    .string()
+    .optional(),
 });
 
 export type RegistrationFormData = yup.InferType<typeof schema>;

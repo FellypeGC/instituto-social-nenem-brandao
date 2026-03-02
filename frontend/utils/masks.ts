@@ -22,3 +22,14 @@ export const maskCPF = (value: string) => {
   
   return digits;
 }
+
+export const maskCEP = (value: string) => {
+  if (!value) return "";
+
+  const digits = value
+    .replace(/\D/g, "")
+    .replace(/^(\d{5})(\d)/, "$1-$2")
+    .slice(0, 9);
+  
+  return digits;
+}
