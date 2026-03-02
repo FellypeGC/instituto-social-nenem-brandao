@@ -165,7 +165,7 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
           <span className="text-red-600">{errors.nacionalidade?.message}</span>
         </div>
         
-        <div className="col-span-1 md:col-span-2 mx-auto">
+        <div className="col-span-1 md:col-span-2 md:mx-auto">
           <label className="block text-sm font-medium text-gray-700">
             Sexo
           </label>
@@ -402,7 +402,7 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
             </div>
 
             {/* COMPLEMENTO */}
-            <div className="col-span-1 md:col-span-2 mx-auto">
+            <div className="col-span-1 md:col-span-2 md:mx-auto">
               <label className="block text-sm font-medium text-gray-700">
                 Complemento
               </label>
