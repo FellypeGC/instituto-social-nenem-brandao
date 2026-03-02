@@ -64,8 +64,7 @@ export const schema = yup.object({
     .notRequired(),
   sexo: yup
     .string()
-    .notRequired()
-    .oneOf(["Masculino", "Feminino", "Outro", "Prefiro não dizer"], "Selecione seu sexo"),
+    .notRequired(),
 
   // Guardian Validation 
   responsavelNome: yup
