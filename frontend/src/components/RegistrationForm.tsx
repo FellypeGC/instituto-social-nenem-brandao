@@ -38,6 +38,7 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
       dataNascimento: undefined as Date | undefined,
       cpf: "",
       rg: "",
+      sexo: "",
       nacionalidade: "",
       responsavelNome: "",
       responsavelCpf: "",
@@ -83,7 +84,7 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
 
     if (currentStep === 0) {
       fieldsToValidate = [
-        "nome", "email", "telefone", "dataNascimento", "cpf", "rg", "nacionalidade"
+        "nome", "email", "telefone", "dataNascimento", "cpf", "rg", "nacionalidade", "sexo"
       ];
 
       if(!isMinor) {

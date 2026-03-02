@@ -39,7 +39,7 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
           <input
             type="text"
             placeholder="Digite seu nome completo"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+            className="w-full p-3 border rounded-lg focus:ring-2 outline-none"
     
             {...register("nome", {
               onChange: () => trigger("nome")
@@ -57,7 +57,7 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
           <input
             type="text"
             placeholder="Digite seu nome social"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+            className="w-full p-3 border rounded-lg focus:ring-2 outline-none"
     
             {...register("nomeSocial", {
               onChange: () => trigger("nomeSocial")
@@ -74,7 +74,7 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
           <input
             type="email"
             placeholder="seu.email@exemplo.com"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+            className="w-full p-3 border rounded-lg focus:ring-2 outline-none"
             {...register("email")}
           />
           <span className="text-red-600">{errors.email?.message}</span>
@@ -89,7 +89,7 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
           <input
             type="text"
             placeholder="(XX) XXXXX-XXXX"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+            className="w-full p-3 border rounded-lg focus:ring-2 outline-none"
             {...register("telefone", {
               onChange: (e: React.ChangeEvent<HTMLInputElement>) => handlePhoneChange(e, "telefone")
             })}
@@ -105,7 +105,7 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
           </label>
           <input
             type="date"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+            className="w-full p-3 border rounded-lg focus:ring-2 outline-none"
             {...register("dataNascimento", {
               valueAsDate: true,
               onChange: () => trigger("dataNascimento")
@@ -125,7 +125,7 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
           <input
             type="text"
             placeholder="123.456.789-10"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+            className="w-full p-3 border rounded-lg focus:ring-2 outline-none"
             {...register("cpf", {
               onChange: (e: React.ChangeEvent<HTMLInputElement>) => handleCPFChange(e, "cpf")
             })}
@@ -141,7 +141,7 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
           <input
             type="text"
             placeholder="Digite seu RG"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+            className="w-full p-3 border rounded-lg focus:ring-2 outline-none"
             {...register("rg")}
           />
           <span className="text-red-600">{errors.rg?.message}</span>
@@ -155,10 +155,27 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
           <input
             type="text"
             placeholder="Digite sua nacionalidade"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+            className="w-full p-3 border rounded-lg focus:ring-2 outline-none"
             {...register("nacionalidade")}
           />
           <span className="text-red-600">{errors.nacionalidade?.message}</span>
+        </div>
+        
+        <div className="col-span-1 md:col-span-2 mx-auto">
+          <label className="block text-sm font-medium text-gray-700">
+            Sexo
+          </label>
+          <select
+            className="w-full p-3 rounded-lg focus:ring-2  outline-none"
+            {...register("sexo")}
+          >
+            <option value="">Selecione...</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Feminino">Feminino</option>
+            <option value="Outro">Outro</option>
+            <option value="Prefiro não dizer">Prefiro não dizer</option>
+          </select>
+          <span className="text-red-600">{errors.sexo?.message}</span>
         </div>
       </div>
 
@@ -177,7 +194,7 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
               <input
                 type="text"
                 placeholder="Digite seu nome completo"
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+                className="w-full p-3 border rounded-lg focus:ring-2 outline-none"
     
                 {...register("responsavelNome")}
               />
@@ -192,7 +209,7 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
               <input
                 type="email"
                 placeholder="seu.email@exemplo.com"
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+                className="w-full p-3 border rounded-lg focus:ring-2 outline-none"
                 {...register("responsavelEmail")}
               />
               <span className="text-red-600">{errors.responsavelEmail?.message}</span>
@@ -207,7 +224,7 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
               <input
                 type="text"
                 placeholder="(XX) XXXXX-XXXX"
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+                className="w-full p-3 border rounded-lg focus:ring-2  outline-none"
                 {...register("responsavelTelefone", {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                     handlePhoneChange(e, "responsavelTelefone");
@@ -226,7 +243,7 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
               </label>
               <input
                 type="date"
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+                className="w-full p-3 border rounded-lg focus:ring-2 outline-none"
                 {...register("responsavelDataNascimento", {
                   valueAsDate: true,
                   onChange: () => trigger("responsavelDataNascimento")
@@ -247,7 +264,7 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
               <input
                 type="text"
                 placeholder="123.456.789-10"
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+                className="w-full p-3 border rounded-lg focus:ring-2 outline-none"
                 {...register("responsavelCpf", {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) => handleCPFChange(e, "responsavelCpf")
                 })}
@@ -263,7 +280,7 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
               <input
                 type="text"
                 placeholder="Digite seu RG"
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+                className="w-full p-3 border rounded-lg focus:ring-2 outline-none"
                 {...register("responsavelRg")}
               />
               <span className="text-red-600">{errors.responsavelRg?.message}</span>
@@ -277,7 +294,7 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
               <input
                 type="text"
                 placeholder="Digite sua nacionalidade"
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+                className="w-full p-3 border rounded-lg focus:ring-2 outline-none"
                 {...register("responsavelNacionalidade")}
               />
               <span className="text-red-600">{errors.responsavelNacionalidade?.message}</span>
