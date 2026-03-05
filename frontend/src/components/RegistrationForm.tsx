@@ -7,7 +7,7 @@ import Steps from './Steps';
 import StudentAdditionalInfo from './StudentAdditionalInfo';
 
 /* 
-  TODO: 1. add/switch inputs and defaultValues from the business rules in both student and guardian form; 2. transform the form into a multi-step form;
+  TODO: add more steps;
 */
 
 type RegistrationFormProps = {
@@ -54,6 +54,19 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
       responsavelBairro: "",
       responsavelNumero: "",
       responsavelComplemento: "",
+      escolaNome: "",
+      escolaTipo: "",
+      escolaSerie: "",
+      escolaTurma: "",
+      escolaTelefone: "",
+      mediaGeral: undefined as number | undefined,
+      frequenciaEscolar: undefined as number | undefined,
+      boletimEscolar: undefined as File | undefined,
+      declaracaoMatricula: undefined as File | undefined,
+      restricaoMedica: "",
+      medicacaoContinua: "",
+      deficiencia: "",
+      contatoEmergencia: "",
     },
     resolver: yupResolver(schema) as Resolver<RegistrationFormData>,
     mode: "onChange",
@@ -136,7 +149,11 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
       )}
 
       {currentStep === 1 && (
-        <StudentAdditionalInfo />
+        <StudentAdditionalInfo
+          register={register}
+          setValue={setValue}
+          errors={errors}
+        />
       )}
 
       <div className="flex gap-3 mt-8">

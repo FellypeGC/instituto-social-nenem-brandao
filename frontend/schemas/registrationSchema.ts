@@ -131,6 +131,67 @@ export const schema = yup.object({
   responsavelComplemento: yup
     .string()
     .optional(),
+  
+  // Scholar data
+  escolaNome: yup
+    .string()
+    .required("Nome da escola é obrigatório"),
+  escolaTipo: yup
+    .string()
+    .required("Selecione o tipo da escola"),
+  escolaTurno: yup
+    .string()
+    .required("Selecione o turno da escola"),
+  escolaSerie: yup
+    .string()
+    .required("Série/Ano é obrigatório"),
+  escolaTurma: yup
+    .string()
+    .required("Turma é obrigatória"),
+  escolaTelefone: yup
+    .string()
+    .required("Telefone da escola é obrigatório")
+    .matches(/^\(\d{2}\)\s\d{5}-\d{4}$/, "Telefone inválido"),
+  mediaGeral: yup
+    .number()
+    .typeError("Insira um número")
+    .required("Média é obrigatória"),
+  frequenciaEscolar: yup
+    .number()
+    .typeError("Insira um número")
+    .required("Frequência é obrigatória"),
+  boletimEscolar: yup
+    .mixed()
+    .required("O upload do boletim é obrigatório"),
+  declaracaoMatricula: yup
+    .mixed()
+    .required("O upload da declaração de matrícula é obrigatório"),
+
+  // health
+  restricaoMedica: yup
+    .string()
+    .required("Informe se possui restrição médica"),
+  medicacaoContinua: yup
+    .string()
+    .required("Informe se usa medicação"),
+  deficiencia: yup
+    .string()
+    .required("Informe se possui deficiência"),
+  contatoEmergencia: yup
+    .string()
+    .required("Contato de emergência é obrigatório"),
+
+  // socioeconomic
+  rendaFamiliar: yup
+    .string()
+    .required("Renda familiar é obrigatória"),
+  residentesQuantidade: yup
+    .number()
+    .required("Quantidade de residentes é obrigatória"),
+  beneficioSocial: yup
+    .string()
+    .required("Informe se recebe benefício social"),
+
 });
 
 export type RegistrationFormData = yup.InferType<typeof schema>;

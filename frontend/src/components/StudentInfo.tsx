@@ -1,15 +1,7 @@
 import { calculateAge, type RegistrationFormData } from "../../schemas/registrationSchema";
-import type { UseFormRegister, FieldErrors, UseFormSetValue, UseFormWatch, UseFormTrigger } from "react-hook-form";
-import { maskCPF, maskPhone, maskCEP } from '../../utils/masks';
 
-type StudentInfoProps = {
-  register: UseFormRegister<RegistrationFormData>;
-  setValue: UseFormSetValue<RegistrationFormData>;
-  watch: UseFormWatch<RegistrationFormData>;
-  trigger: UseFormTrigger<RegistrationFormData>;
-  errors: FieldErrors<RegistrationFormData>;
-  isMinor: boolean;
-}
+import { maskCPF, maskPhone, maskCEP } from '../../utils/masks';
+import type { StudentInfoProps } from "../types/StudentInfo";
 
 const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: StudentInfoProps) => {
 
@@ -33,7 +25,6 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
       <h1 className="text-2xl font-bold text-gray-700">Identificação do Aluno</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
         {/* NOME DO ALUNO */}
         <div className="col-span-1 md:col-span-2">
           <label className="block text-sm font-medium text-gray-700">
@@ -53,7 +44,6 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
         </div>
 
         {/* NOME SOCIAL DO ALUNO */}
-
         <div className="col-span-1 md:col-span-2">
           <label className="block text-sm font-medium text-gray-700">
             Nome Social
