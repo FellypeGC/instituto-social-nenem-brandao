@@ -110,6 +110,51 @@ const StudentAdditionalInfo = ({ register, setValue, errors }: StudentAdditional
           <input type="text" {...register("escolaTelefone")} onChange={(e) => handlePhoneChange(e, "escolaTelefone")} className="w-full p-3 border rounded-lg focus:ring-2 outline-none" placeholder="(00) 0000-0000" />
         </div>
       </div>
+
+      <hr />
+      <h2 className="text-xl font-bold text-gray-700 col-span-1 md:col-span-2 mt-8">Saúde</h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 col-span-1 md:col-span-2">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Possui restrição médica?
+            <span className="text-red-600">*</span>
+          </label>
+          <select {...register("restricaoMedica")} className="w-full p-3 border rounded-lg focus:ring-2 outline-none">
+            <option value="">Selecione...</option>
+            <option value="Não">Não</option>
+            <option value="Sim">Sim</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Usa medicação contínua?
+            <span className="text-red-600">*</span>  
+          </label>
+          <select {...register("medicacaoContinua")} className="w-full p-3 border rounded-lg focus:ring-2 outline-none">
+            <option value="">Selecione...</option>
+            <option value="Não">Não</option>
+            <option value="Sim">Sim</option>
+          </select>
+        </div>
+
+        <div className="col-span-1 md:col-span-2">
+          <label className="block text-sm font-medium text-gray-700">
+            Possui deficiência? (Especifique)
+            <span className="text-red-600">*</span>
+          </label>
+          <input type="text" {...register("deficiencia")} placeholder="Caso não possua, digite 'Não'" className="w-full p-3 border rounded-lg focus:ring-2 outline-none" />
+        </div>
+
+        <div className="col-span-1 md:col-span-2 md:mx-auto">
+          <label className="block text-sm font-medium text-gray-700">
+            Contato de Emergência
+            <span className="text-red-600">*</span>
+          </label>
+          <input type="text" {...register("contatoEmergencia")} onChange={(e) => handlePhoneChange(e, "contatoEmergencia")} className="w-full p-3 border rounded-lg focus:ring-2 outline-none" placeholder="(00) 00000-0000" />
+        </div>
+      </div>
     </>
   )
 }
