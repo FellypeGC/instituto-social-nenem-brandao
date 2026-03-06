@@ -60,7 +60,7 @@ const StudentAdditionalInfo = ({ register, setValue, errors }: StudentAdditional
             <label className="block text-sm font-medium text-gray-700">
               Turma
               <span className="text-red-600">*</span>
-              </label>
+            </label>
             <input type="text" {...register("escolaTurma")} className="w-full p-3 border rounded-lg focus:ring-2 outline-none" />
           </div>
         </div>
@@ -153,6 +153,44 @@ const StudentAdditionalInfo = ({ register, setValue, errors }: StudentAdditional
             <span className="text-red-600">*</span>
           </label>
           <input type="text" {...register("contatoEmergencia")} onChange={(e) => handlePhoneChange(e, "contatoEmergencia")} className="w-full p-3 border rounded-lg focus:ring-2 outline-none" placeholder="(00) 00000-0000" />
+        </div>
+      </div>
+
+      <hr />
+      <h2 className="text-xl font-bold text-gray-700 col-span-1 md:col-span-2 mt-8">Socioeconômico</h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 col-span-1 md:col-span-2">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Renda Familiar
+            <span className="text-red-600">*</span>
+          </label>
+          <select {...register("rendaFamiliar")} className="w-full p-3 border rounded-lg focus:ring-2 outline-none">
+            <option value="">Selecione a faixa...</option>
+            <option value="Ate 1 salario">Até 1 salário mínimo</option>
+            <option value="1 a 3 salarios">1 a 3 salários mínimos</option>
+            <option value="Mais de 3 salarios">Mais de 3 salários mínimos</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-[13.5px] font-medium text-gray-700 whitespace-nowrap">
+            Nº de Pessoas na Residência
+            <span className="text-red-600">*</span>  
+          </label>
+          <input type="number" {...register("residentesQuantidade")} className="w-full p-3 border rounded-lg focus:ring-2 outline-none" />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Recebe benefício social?
+            <span className="text-red-600">*</span>
+          </label>
+          <select {...register("beneficioSocial")} className="w-full p-3 border rounded-lg focus:ring-2 outline-none">
+            <option value="Não">Não</option>
+            <option value="Bolsa Família">Bolsa Família</option>
+            <option value="BPC">BPC</option>
+            <option value="Outros">Outros</option>
+          </select>
         </div>
       </div>
     </>
