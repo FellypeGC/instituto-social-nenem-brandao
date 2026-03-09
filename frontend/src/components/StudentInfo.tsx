@@ -389,6 +389,7 @@ const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: St
                 className="w-full p-3 border rounded-lg focus:ring-2 outline-none" 
                 {...register("responsavelEstado")} 
               />
+              <span className="text-red-600 text-sm">{errors.responsavelUf?.message}</span>
             </div>
 
             {/* COMPLEMENTO */}

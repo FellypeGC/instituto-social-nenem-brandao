@@ -23,8 +23,11 @@ export const schema = yup.object({
     .max(100, "Nome pode ter no máximo 100 caracteres"),
   nomeSocial: yup
     .string()
+    .transform((value) => value?.trim() === "" ? undefined : value?.trim())
     .min(3, "Nome do aluno precisa ter pelo menos 3 caracteres")
-    .max(100, "Nome pode ter no máximo 100 caracteres"),
+    .max(100, "Nome pode ter no máximo 100 caracteres")
+    .optional()
+    .default(undefined),
   email: yup
     .string()
     .email("Email inválido")
@@ -69,14 +72,11 @@ export const schema = yup.object({
   // Guardian Validation 
   responsavelNome: yup
     .string()
-    .required("Nome do responsável é obrigatório")
     .when("dataNascimento", {
-      is: (value: Date) => value && !calculateAge(value),
-      then: schema => schema.required("Nome do responsável é obrigatório"),
-      otherwise: schema => schema.notRequired()
-    })
-    .min(3, "Nome do responsável deve ter pelo menos 3 caracteres")
-    .max(100, "Nome do responsável deve ter no máximo 100 caracteres"),
+      is: (val: Date) => val && !calculateAge(val),
+      then: (s) => s.required("Nome do responsável é obrigatório").min(3, "Mínimo 3 caracteres"),
+      otherwise: (s) => s.notRequired().nullable().transform(() => undefined),
+    }),
   responsavelCpf: yup
     .string()
     .when("dataNascimento", {
@@ -97,39 +97,87 @@ export const schema = yup.object({
     .notRequired(),
   responsavelTelefone: yup
     .string()
-    .required("Telefone do responsável é obrigatório")
-    .matches(/^\(\d{2}\)\s\d{5}-\d{4}$/, "Telefone inválido"),
+    .when("dataNascimento", {
+      is: (value: Date) => value && !calculateAge(value),
+      then: (schema) => 
+        schema
+          .required("Telefone do responsável é obrigatório")
+          .matches(/^\(\d{2}\)\s\d{5}-\d{4}$/, "Telefone inválido"),
+      otherwise: (schema) => schema.notRequired().nullable(),
+    }),
   responsavelDataNascimento: yup
-    .date()
+    .mixed()
     .nullable()
-    .required("Data de nascimento do responsável é obrigatória")
-    .typeError("Insira uma data válida")
-    .transform((value, originalValue) => (originalValue === "" ? null : value))
-    .max(new Date(), "Insira uma data válida")
-    .min(new Date("1900-01-01"), "Data muito antiga"),
+    .test("is-valid-date", "Insira uma data válida", (value, context) => {
+      const { dataNascimento } = context.parent;
+      const isMinor = dataNascimento && !calculateAge(dataNascimento);
+
+      if (!isMinor) return true;
+
+      if (!value || value === "") return false;
+      
+      const date = new Date(value as string);
+      return !isNaN(date.getTime());
+    }),
   responsavelNacionalidade: yup
     .string()
-    .notRequired(),
+    .notRequired()
+    .when("dataNascimento", {
+      is: (val: Date) => val && !calculateAge(val),
+      then: (s) => s.typeError("Nacionalidade inválida"),
+      otherwise: (s) => s.notRequired().nullable()
+    }),
   responsavelEstado: yup
     .string()
-    .required("Estado é obrigatório"),
+    .when("dataNascimento", {
+      is: (val: Date) => val && !calculateAge(val),
+      then: (s) => s.required("Estado do responsável é obrigatório").typeError("Estado inválido"),
+      otherwise: (s) => s.notRequired().nullable()
+    }),
   responsavelCidade: yup
     .string()
-    .required("Cidade é obrigatória"),
+    .when("dataNascimento", {
+      is: (val: Date) => val && !calculateAge(val),
+      then: (s) => s.required("Cidade do responsável é obrigatória").typeError("Cidade inválida"),
+      otherwise: (s) => s.notRequired().nullable()
+    }),
   responsavelCep: yup
     .string()
-    .required("CEP é obrigatório").matches(/^\d{5}-\d{3}$/, "CEP inválido"),
+    .when("dataNascimento", {
+      is: (val: Date) => val && !calculateAge(val),
+      then: (s) => s.required("CEP é obrigatório").matches(/^\d{5}-\d{3}$/, "CEP inválido"),
+      otherwise: (s) => s.notRequired().nullable()
+    }),
   responsavelRua: yup
     .string()
-    .required("Rua é obrigatória"),
+    .when("dataNascimento", {
+      is: (val: Date) => val && !calculateAge(val),
+      then: (s) => s.required("Rua do responsável é obrigatória").typeError("Rua inválida"),
+      otherwise: (s) => s.notRequired().nullable()
+    }),
   responsavelBairro: yup
-    .string()
-    .required("Bairro é obrigatório"),
+    .string().when("dataNascimento", {
+      is: (val: Date) => val && !calculateAge(val),
+      then: (s) => s.required("Bairro do responsável é obrigatória").typeError("Bairro inválido"),
+      otherwise: (s) => s.notRequired().nullable()
+    }),
   responsavelNumero: yup
     .string()
-    .required("Número é obrigatório"),
+    .when("dataNascimento", {
+      is: (val: Date) => val && !calculateAge(val),
+      then: (s) => s.required("Número é obrigatório").typeError("Número inválido"),
+      otherwise: (s) => s.notRequired().nullable()
+    }),
+  responsavelUf: yup
+    .string()
+    .when("dataNascimento", {
+      is: (val: Date) => val && !calculateAge(val),
+      then: (s) => s.required("UF é obrigatório").typeError("UF inválido"),
+      otherwise: (s) => s.notRequired().nullable()
+    }),
   responsavelComplemento: yup
     .string()
+    .nullable()
     .optional(),
   
   // Scholar data
@@ -161,11 +209,23 @@ export const schema = yup.object({
     .typeError("Insira um número")
     .required("Frequência é obrigatória"),
   boletimEscolar: yup
-    .mixed()
+    .mixed<FileList | File>()
+    .test("required", "O upload do boletim é obrigatório", (value) => {
+      if (!value) return false;
+      if (value instanceof File) return true;
+      if (value instanceof FileList) return value.length > 0;
+      return false;
+    })
     .required("O upload do boletim é obrigatório"),
   declaracaoMatricula: yup
-    .mixed()
-    .required("O upload da declaração de matrícula é obrigatório"),
+    .mixed<FileList | File>()
+    .test("required", "O upload da declaração é obrigatório", (value) => {
+      if (!value) return false;
+      if (value instanceof File) return true;
+      if (value instanceof FileList) return value.length > 0;
+      return false;
+    })
+    .required("O upload da declaração é obrigatório"),
 
   // health
   restricaoMedica: yup
