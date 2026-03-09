@@ -5,9 +5,10 @@ import { calculateAge, schema, type RegistrationFormData } from "../../schemas/r
 import StudentInfo from './StudentInfo';
 import Steps from './Steps';
 import StudentAdditionalInfo from './StudentAdditionalInfo';
+import ActivitiesConsent from './ActivitiesConsent';
 
 /* 
-  TODO: add more steps;
+  TODO: add activities of interest: vôlei, futebol e ginástica artística infantil
 */
 
 type RegistrationFormProps = {
@@ -67,6 +68,8 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
       medicacaoContinua: "",
       deficiencia: "",
       contatoEmergencia: "",
+      atividadesInteresse: [] as string[],
+      lgpdAutorizacao: false,
     },
     resolver: yupResolver(schema) as Resolver<RegistrationFormData>,
     mode: "onChange",
@@ -152,6 +155,14 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
         <StudentAdditionalInfo
           register={register}
           setValue={setValue}
+          errors={errors}
+        />
+      )}
+
+      {currentStep === 3 && (
+        <ActivitiesConsent 
+          register={register}
+          watch={watch}
           errors={errors}
         />
       )}

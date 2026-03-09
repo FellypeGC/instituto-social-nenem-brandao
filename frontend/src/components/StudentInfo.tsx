@@ -1,7 +1,7 @@
 import { calculateAge, type RegistrationFormData } from "../../schemas/registrationSchema";
 
 import { maskCPF, maskPhone, maskCEP } from '../../utils/masks';
-import type { StudentInfoProps } from "../types/StudentInfo";
+import type { StudentInfoProps } from "../types/student-info";
 
 const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: StudentInfoProps) => {
 

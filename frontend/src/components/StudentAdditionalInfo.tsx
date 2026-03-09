@@ -1,5 +1,5 @@
 import type { RegistrationFormData } from "../../schemas/registrationSchema";
-import type { StudentAdditionalInfoProps } from "../types/StudentInfo";
+import type { StudentAdditionalInfoProps } from "../types/student-info";
 import { maskPhone } from "../../utils/masks";
 
 const StudentAdditionalInfo = ({ register, setValue, errors }: StudentAdditionalInfoProps) => {

@@ -11,3 +11,5 @@ export type StudentInfoProps = {
 }
 
 export type StudentAdditionalInfoProps = Omit<StudentInfoProps, "watch" | "trigger" | "isMinor">
+
+export type ActivitiesConsentProps = Omit<StudentInfoProps, "setValue" | "trigger" | "isMinor">

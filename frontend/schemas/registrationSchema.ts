@@ -192,6 +192,16 @@ export const schema = yup.object({
     .string()
     .required("Informe se recebe benefício social"),
 
+  // Activies and Consent
+  atividadesInteresse: yup
+    .array()
+    .of(yup.string())
+    .required()
+    .min(1, "Selecione pelo menos uma atividade de interesse"),
+  lgpdAutorizacao: yup
+    .boolean()
+    .oneOf([true], "Você deve aceitar a política de privacidade"),
+
 });
 
 export type RegistrationFormData = yup.InferType<typeof schema>;
