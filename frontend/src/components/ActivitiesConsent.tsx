@@ -1,20 +1,33 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import type { ActivitiesConsentProps } from "../types/student-info";
 import { AVAILABLE_ACTIVITIES_OF_INTEREST } from "../constants/available-activities-of-interest"
 
 const ActivitiesConsent = ({ register, watch, errors }: ActivitiesConsentProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  const selectRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (selectRef.current && !selectRef.current.contains(event.target as Node)) setIsDropdownOpen(false);
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, []);
 
   return (
     <>
-      <div className="col-span-1 md:col-span-3 mt-8 relative">
+      <div ref={selectRef} className="col-span-1 md:col-span-3 mt-8 relative">
         <label className="block text-sm font-bold text-gray-700 mb-2">
           Atividades de Interesse
           <span className="text-red-600">*</span>
         </label>
 
-        {/* Botão que simula o Select */}
         <div 
+          ref={selectRef}
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           className="w-full p-3 border rounded-xl bg-[#f8fafc] border-[#e2e8f0] cursor-pointer flex justify-between items-center hover:border-blue-400 transition-all"
         >
@@ -23,13 +36,11 @@ const ActivitiesConsent = ({ register, watch, errors }: ActivitiesConsentProps) 
               ? `${watch("atividadesInteresse").length} selecionada(s)` 
               : "Selecione as atividades..."}
           </span>
-          {/* Ícone da setinha idêntico ao do Turno */}
           <svg className={`w-5 h-5 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
           </svg>
         </div>
 
-        {/* Lista Suspensa com Checkboxes */}
         {isDropdownOpen && (
           <div className="absolute z-10 w-full mt-2 bg-white border border-[#e2e8f0] rounded-xl shadow-xl max-h-60 overflow-y-auto p-2">
             {AVAILABLE_ACTIVITIES_OF_INTEREST.map((activity) => (
