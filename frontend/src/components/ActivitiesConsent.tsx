@@ -42,7 +42,7 @@ const ActivitiesConsent = ({ register, watch, errors }: ActivitiesConsentProps) 
         </div>
 
         {isDropdownOpen && (
-          <div className="absolute z-10 w-full mt-2 bg-white border border-[#e2e8f0] rounded-xl shadow-xl max-h-60 overflow-y-auto p-2">
+          <div onClick={(e) => e.stopPropagation()} className="absolute z-10 w-full mt-2 bg-white border border-[#e2e8f0] rounded-xl shadow-xl max-h-60 overflow-y-auto p-2">
             {AVAILABLE_ACTIVITIES_OF_INTEREST.map((activity) => (
               <label 
                 key={activity.id} 
@@ -61,10 +61,7 @@ const ActivitiesConsent = ({ register, watch, errors }: ActivitiesConsentProps) 
             ))}
           </div>
         )}
-
-        {errors.atividadesInteresse && (
-          <p className="text-red-600 text-xs mt-1 font-semibold">{errors.atividadesInteresse.message}</p>
-        )}
+        <span className="text-red-600 text-xs mt-1 font-semibold">{errors.atividadesInteresse?.message}</span>
       </div>
 
       <div className="col-span-1 md:col-span-2 mt-8 p-4 bg-gray-50 border rounded-lg">

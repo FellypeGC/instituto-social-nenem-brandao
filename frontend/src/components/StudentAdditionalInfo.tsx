@@ -125,6 +125,7 @@ const StudentAdditionalInfo = ({ register, setValue, errors }: StudentAdditional
             <option value="Não">Não</option>
             <option value="Sim">Sim</option>
           </select>
+          <span className="text-red-600 text-sm">{errors.restricaoMedica?.message}</span>
         </div>
 
         <div>
@@ -137,6 +138,7 @@ const StudentAdditionalInfo = ({ register, setValue, errors }: StudentAdditional
             <option value="Não">Não</option>
             <option value="Sim">Sim</option>
           </select>
+          <span className="text-red-600 text-sm">{errors.medicacaoContinua?.message}</span>
         </div>
 
         <div className="col-span-1 md:col-span-2">
@@ -144,7 +146,8 @@ const StudentAdditionalInfo = ({ register, setValue, errors }: StudentAdditional
             Possui deficiência? (Especifique)
             <span className="text-red-600">*</span>
           </label>
-          <input type="text" {...register("deficiencia")} placeholder="Caso não possua, digite 'Não'" className="w-full p-3 border rounded-lg focus:ring-2 outline-none" />
+          <input type="text" {...register("deficiencia")} placeholder="Caso não possua, digite 'Não'" className="w-full p-3 border rounded-lg  focus:ring-2 outline-none" />
+          <span className="text-red-600 text-sm">{errors.deficiencia?.message}</span>
         </div>
 
         <div className="col-span-1 md:col-span-2 md:mx-auto">
@@ -153,6 +156,7 @@ const StudentAdditionalInfo = ({ register, setValue, errors }: StudentAdditional
             <span className="text-red-600">*</span>
           </label>
           <input type="text" {...register("contatoEmergencia")} onChange={(e) => handlePhoneChange(e, "contatoEmergencia")} className="w-full p-3 border rounded-lg focus:ring-2 outline-none" placeholder="(00) 00000-0000" />
+          <span className="text-red-600 text-sm">{errors.contatoEmergencia?.message}</span>
         </div>
       </div>
 
@@ -171,6 +175,7 @@ const StudentAdditionalInfo = ({ register, setValue, errors }: StudentAdditional
             <option value="1 a 3 salarios">1 a 3 salários mínimos</option>
             <option value="Mais de 3 salarios">Mais de 3 salários mínimos</option>
           </select>
+          <span className="text-red-600 text-sm">{errors.rendaFamiliar?.message}</span>
         </div>
 
         <div>
@@ -179,6 +184,7 @@ const StudentAdditionalInfo = ({ register, setValue, errors }: StudentAdditional
             <span className="text-red-600">*</span>  
           </label>
           <input type="number" {...register("residentesQuantidade")} className="w-full p-3 border rounded-lg focus:ring-2 outline-none" />
+          <span className="text-red-600 text-sm">{errors.residentesQuantidade?.message}</span>
         </div>
 
         <div>
@@ -191,6 +197,7 @@ const StudentAdditionalInfo = ({ register, setValue, errors }: StudentAdditional
             <option value="BPC">BPC</option>
             <option value="Outros">Outros</option>
           </select>
+          <span className="text-red-600 text-sm">{errors.beneficioSocial?.message}</span>
         </div>
       </div>
     </>
