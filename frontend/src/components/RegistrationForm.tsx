@@ -10,10 +10,11 @@ import ActivitiesConsent from './ActivitiesConsent';
 
 type RegistrationFormProps = {
   matricula: string;
+  onComplete: () => void;
 }
 
 
-const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
+const RegistrationForm = ({ matricula, onComplete }: RegistrationFormProps) => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const isLastStep = currentStep === 2;
 
@@ -137,6 +138,7 @@ const RegistrationForm = ({ matricula }: RegistrationFormProps) => {
       await handleSubmit(
         async (data) => {
           console.log("Sucesso! Dados prontos para envio:", data);
+          onComplete();
         }, (errors) => {
           console.log("Erro de validação final:", errors);
         }
