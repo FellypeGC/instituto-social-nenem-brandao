@@ -4,15 +4,14 @@ import { maskCPF, maskPhone, maskCEP } from '../../utils/masks';
 import type { StudentInfoProps } from "../types/student-info";
 
 const StudentInfo = ({ register, setValue, watch, trigger, errors, isMinor }: StudentInfoProps) => {
-
-  const handleCPFChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: keyof RegistrationFormData) => {
-    const { value } = e.target;
-    setValue(fieldName, maskCPF(value), { shouldValidate: true});
-  }
-
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: keyof RegistrationFormData) => {
     const { value } = e.target;
     setValue(fieldName, maskPhone(value), { shouldValidate: true });
+  }
+  
+  const handleCPFChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: keyof RegistrationFormData) => {
+    const { value } = e.target;
+    setValue(fieldName, maskCPF(value), { shouldValidate: true});
   }
 
   const handleCEPChange = (e:React.ChangeEvent<HTMLInputElement>, fieldName: keyof RegistrationFormData) => {

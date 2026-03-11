@@ -88,11 +88,10 @@ const RegistrationForm = ({ matricula, onComplete }: RegistrationFormProps) => {
 
   useEffect(() => {
     if (!isMinor) {
-      // Lista de campos para limpar
       const fields = [
-      "responsavelNome", "responsavelCpf", "responsavelRg", 
-      "responsavelEmail", "responsavelTelefone", "responsavelDataNascimento", "responsavelNacionalidade", "responsavelCep", "responsavelRua", "responsavelBairro", 
-      "responsavelNumero", "responsavelCidade", "responsavelEstado"
+        "responsavelNome", "responsavelCpf", "responsavelRg", 
+        "responsavelEmail", "responsavelTelefone", "responsavelDataNascimento", "responsavelNacionalidade", "responsavelCep", "responsavelRua", "responsavelBairro", 
+        "responsavelNumero", "responsavelCidade", "responsavelEstado"
       ] as const;
       
       fields.forEach(campo => {
